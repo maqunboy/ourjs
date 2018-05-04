@@ -1,134 +1,455 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
-<meta charset="utf-8">
-<title>AnyNB 股市牛博汇</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="keywords" content="">
-<meta name="description" content="">
-<!--#include="style.part"-->
-<script>var conf={{=it.conf}}</script>
+<!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Favicons -->
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="msapplication-config" content="https://simpleqode.bitbucket.io/incline/assets/ico/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Plugins CSS -->
+    
+    <!--#include="style.part"-->
+
+    <title>Markexin | Welcome</title>
+    <script>var conf={{=it.conf}}</script>
 </head>
 
-<body class="bbs">
+<body>
 
 <!--#include="header.part"-->
 
-<div class="container">
-  <div class="row-fluid">
-    <div class="span12">
-      <div style="background:#efefef;font-size:16px;text-align:center;margin:0 0 24px;line-height:44px">股市有风险，投资需谨慎</div>
-    </div>
-  </div>
+<!-- HERO
+================================================== -->
+<section class="section section-top section-full">
 
-  <div class="row-fluid">
-    <div id="article" class="span8 article-list">
-      <div class="nav-separator"></div>
-      <div class="keywords" id='keyNav'>
-        <ul class="clearfix">
-          <li>{{=it.keyword || '最新文章'}}</li>
-          <li class="pull-right"><a href="/rss/{{=it.keyword || ''}}" target="_blank">RSS</a></li>
-        </ul>
+  <!-- Cover -->
+  <div class="bg-cover" style="background-color: transparent;"></div>
+
+  <!-- Overlay -->
+  <div class="bg-overlay"></div>
+
+  <!-- Triangles -->
+  <div class="bg-triangle bg-triangle-light bg-triangle-bottom bg-triangle-left"></div>
+  <div class="bg-triangle bg-triangle-light bg-triangle-bottom bg-triangle-right"></div>
+
+  <!-- Content -->
+  <div class="container">
+    <div class="row justify-content-center align-items-center">
+      <div class="col-md-8 col-lg-7">
+
+        <!-- Preheading -->
+        <p class="text-white text-muted text-uppercase text-center text-sm" data-animation="fadeUp" data-animation-order="0" data-animation-trigger="entered">
+          by parents
+        </p>
+        
+        <!-- Heading -->
+        <h1 class="text-white text-center mb-4" data-animation="fadeUp" data-animation-order="1" data-animation-trigger="entered">
+          To Be Yong And Simple
+        </h1>
+
+        <!-- Subheading -->
+        <p class="lead text-white text-muted text-center mb-5" data-animation="fadeUp" data-animation-order="2" data-animation-trigger="entered">
+          May I leave half, return is still young 。
+        </p>
+
+        <!-- Button -->
+        <p class="text-center mb-0" data-animation="fadeUp" data-animation-order="3" data-animation-trigger="entered">
+          <a href="/root/news" target="_blank" class="btn btn-outline-primary text-white">
+            Start
+          </a>
+        </p>
+
       </div>
-      <ul id="comments_list" class="unstyled comments">
-        {{~ it.articles:article:index }}
-        <li>
-          <div class="num">{{=article.visitNum || 0}}</div>
-          <div class="content">
-            {{?article.verify=='1'}}
-            <i class="icon-star-empty"></i>
-            {{?}}
-            {{?article.content}}
-            <a href="/article/{{=article.id}}" target="_blank">{{=article.title || ''}}</a>
-            {{??}}
-            <i class="icon-tags"></i> <a href="/redirect/{{=article.id}}" target="_blank">{{=article.title || ''}}</a>
-            {{?}}
-          </div>
-          <div class="info">
-            <a href="/user/{{=article.poster}}" target="_blank">{{=article.poster}}</a>
-            • <span class="formatdate">{{=article.replyTime || article.postTime || 0}}</span>
-            {{?article.keyword}} • {{=article.keyword}} {{?}}
-            • <a href="/article/{{=article.id}}#comments" target="_blank">发表评论</a>
-            {{?article.url}}• <a href="{{=article.url}}" target="_blank">原文地址</a>{{?}}
+    </div> <!-- / .row -->
+  </div> <!-- / .container -->
 
-            {{?it.user.isAdmin}}
-              {{?article.isPublic == 1}}
-              • <a href="/root/publish/{{=article.id}}/0" target="_blank"> 取消发布 </a>
-              {{??}}
-              • <a href="/root/publish/{{=article.id}}/1" target="_blank"> 发布 </a>
-              {{?}}
-            {{?}}
+</section>
+
+<!-- SECTIONS
+================================================== -->
+<!-- PAGES
+================================================== -->
+<section class="section" id="pages">
+
+  <!-- Content -->
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+
+        <!-- Heading -->
+        <h2 class="text-center mb-4">
+          Landing page variants
+        </h2>
+
+        <!-- Subheading -->
+        <p class="text-muted text-center mb-5">
+          Incline comes with several professionally designed landing pages that can be easily adapted for any project.
+        </p>
+
+      </div>
+    </div> <!-- / .row -->
+    <div class="row">
+      <div class="col-md-4">
+    
+        <!-- Item -->
+        <a href="app.html" class="card border-0 mb-3 mb-md-0">
+      
+          <!-- Image -->
+          <div class="card-img-top">
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1525415549924&di=256decde4076db3038aff80cf4a2d4a4&imgtype=0&src=http%3A%2F%2Fs9.knowsky.com%2Fbizhi%2Fl%2F1-5000%2F200952814733773376642.jpg" alt="App landing" class="img-fluid">
           </div>
-        </li>
-        {{~}}
-        <!--Google广告|可删除或替换成你自己的-->
-        <li style="margin: 0;padding: 4px 0;">
-          <div style="height:90px;overflow:hidden">
-            <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-1941367294435664"
-                 data-ad-slot="2234709637"
-                 data-ad-format="auto"></ins>
-            <script>
-            (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+
+          <!-- Body -->
+          <div class="card-body">
+        
+            <!-- Title -->
+            <h4 class="card-title">
+              App landing
+            </h4>
+
+            <!-- Body -->
+            <p class="card-text text-muted">
+              Use this page to promote your web or mobile application.
+            </p>
+
           </div>
-        </li>
-      </ul>
-      <div class="pagination">{{=it.pagination || ''}}</div>
+
+        </a> <!-- / .card -->
+
+      </div>
+      <div class="col-md-4">
+    
+        <!-- Item -->
+        <a href="product.html" class="card border-0 mb-3">
+      
+          <!-- Image -->
+          <div class="card-img-top">
+            <img src="https://simpleqode.bitbucket.io/incline/assets/img/44.png" alt="App landing" class="img-fluid">
+          </div>
+
+          <!-- Body -->
+          <div class="card-body">
+        
+            <!-- Title -->
+            <h4 class="card-title">
+              Product landing
+            </h4>
+
+            <!-- Body -->
+            <p class="card-text text-muted">
+              Use this page to promote your product or a store.
+            </p>
+
+          </div>
+
+        </a> <!-- / .card -->
+
+      </div>
+      <div class="col-md-4">
+    
+        <!-- Item -->
+        <a href="real-estate.html" class="card border-0 mb-3 mb-md-0">
+      
+          <!-- Image -->
+          <div class="card-img-top">
+            <img src="https://simpleqode.bitbucket.io/incline/assets/img/46.png" alt="App landing" class="img-fluid">
+          </div>
+
+          <!-- Body -->
+          <div class="card-body">
+        
+            <!-- Title -->
+            <h4 class="card-title">
+              Real estate landing
+            </h4>
+
+            <!-- Body -->
+            <p class="card-text text-muted">
+              Use this page to promote your real estate.
+            </p>
+
+          </div>
+
+        </a> <!-- / .card -->
+
+      </div>
+      <div class="col-md-4">
+    
+        <!-- Item -->
+        <a href="service.html" class="card border-0 mb-3">
+      
+          <!-- Image -->
+          <div class="card-img-top">
+            <img src="https://simpleqode.bitbucket.io/incline/assets/img/43.png" alt="App landing" class="img-fluid">
+          </div>
+
+          <!-- Body -->
+          <div class="card-body">
+        
+            <!-- Title -->
+            <h4 class="card-title">
+              Service landing
+            </h4>
+
+            <!-- Body -->
+            <p class="card-text text-muted">
+              Use this page to promote your business or a service.
+            </p>
+
+          </div>
+
+        </a> <!-- / .card -->
+
+      </div>
+      <div class="col-md-4">
+    
+        <!-- Item -->
+        <a href="#" class="card border-0 mb-3 mb-md-0 disabled">
+      
+          <!-- Image -->
+          <div class="card-img-top card-img-waiting">
+            <span class="icon-clock icon-2x"></span>
+          </div>
+
+          <!-- Body -->
+          <div class="card-body">
+        
+            <!-- Title -->
+            <h4 class="card-title">
+              Coming soon
+            </h4>
+
+            <!-- Text -->
+            <p class="card-text text-muted">
+              Feel free to contact us with your ideas about new pages and components.
+            </p>
+
+          </div>
+
+        </a> <!-- / .card -->
+
+      </div>
+      <div class="col-md-4">
+    
+        <!-- Item -->
+        <a href="#" class="card border-0 disabled">
+      
+          <!-- Image -->
+          <div class="card-img-top card-img-waiting">
+            <span class="icon-clock icon-2x"></span>
+          </div>
+
+          <!-- Body -->
+          <div class="card-body">
+        
+            <!-- Title -->
+            <h4 class="card-title">
+              Coming soon
+            </h4>
+
+            <!-- Text -->
+            <p class="card-text text-muted">
+              Feel free to contact us with your ideas about new pages and components.
+            </p>
+
+          </div>
+
+        </a> <!-- / .card -->
+
+      </div>
+    </div> <!-- / .row -->
+  </div> <!-- / .container -->
+
+</section>
+
+<!-- ABOUT
+================================================== -->
+<section class="section">
+
+  <!-- Content -->
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6 col-lg-5 offset-lg-1 order-md-2">
+    
+        <!-- Image -->
+        <div class="img-effect img-effect-solid mb-5 mb-md-0">
+          <img src="https://simpleqode.bitbucket.io/incline/assets/img/47.jpg" class="img-fluid" alt="...">
+        </div>
+
+      </div>
+      <div class="col-md-6 col-lg-4 offset-lg-1 order-md-1">
+
+        <!-- Heading -->
+        <h2 class="mb-4">
+          Intuitive workflow
+        </h2>
+
+        <!-- Content -->
+        <ul class="list-iconed text-muted">
+          <li>
+            Speed up your development process with Gulp and BrowserSync live browser reload
+          </li>
+          <li>
+            Easily adjust the look of any component with tons of additional SASS variables included
+          </li>
+          <li>
+            Easily make global changes with HTML file @@includes
+          </li>
+        </ul>
+
+        <!-- Button -->
+        <a href="documentation.html" class="btn btn-outline-primary">
+          Documentation
+        </a>
+    
+      </div>
+    </div> <!-- / .row -->
+  </div> <!-- / .container -->
+
+</section>
+
+<!-- SERVICES
+================================================== -->
+<section class="section bg-light">
+
+  <!-- Triangles -->
+  <div class="bg-triangle bg-triangle-dark bg-triangle-top bg-triangle-left"></div>
+  <div class="bg-triangle bg-triangle-dark bg-triangle-bottom bg-triangle-right"></div>
+
+  <!-- Content -->
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+    
+        <!-- Heading -->
+        <h2 class="text-center mb-4">
+          Ultimate solution
+        </h2>
+
+        <!-- Subheading -->
+        <p class="text-muted text-center mb-5">
+          Easily create a website of any complexity with dozens of pages and independent components for any purpose.
+        </p>
+
+      </div>
     </div>
-    <div class="span1"></div>
-    <div class="span3">
-      <ul class="dropdown-menu" style="position:static;float:right;display:block">
-        <li class="nav-header">RSS 订阅</li>
-        <li><a href="/rss/{{=it.keyword || ''}}" target="_blank">RSS 订阅</a></li>
-        <li class="divider"></li>
-        <li class="nav-header">微信订阅</li>
-        <li class="text-center">
-          <div style="margin:14px;min-height:246px">
-            <img src="/img/weixin.jpg" alt="ourjs官方微信号" width="254" height="254" style="border: solid 1px #666;" />
+    <div class="row no-gutters align-items-stretch">
+      <div class="col-md-4">
+    
+        <!-- Card -->
+        <div class="card card-tall card-stretch border-0 mb-3 md-md-0">
+      
+          <!-- Image -->
+          <div class="bg-cover" style="background-image: url(https://simpleqode.bitbucket.io/incline/assets/img/24.jpg)"></div>
+
+          <!-- Overlay -->
+          <div class="bg-overlay"></div>
+
+          <!-- Body -->
+          <div class="card-body">
+
+            <!-- Icon -->
+            <div class="card-icon text-primary">
+              <span class="icon icon-layers"></span>
             </div>
-          <div style="margin:24px 14px;text-align:left;font-size:16px;">
-            我们的微信公众号:
-            <br>
-            <b>ourjs</b> 或 <b>anynb-com</b>
-            <br>
-            打开微信扫一扫即可关注我们，随时查看牛人们的最新观点
+      
+            <!-- Title -->
+            <h4 class="card-title text-white">
+              Support pages
+            </h4>
+
+            <!-- Text -->
+            <p class="card-text text-white text-muted mb-0">
+              Finish off your website with multiple support pages included into the package.
+            </p>
+
           </div>
-        </li>
-        <li class="divider"></li>
-        <li>
-          <p class="nav-header">邮件订阅, 使用
-            <a href="http://list.qq.com/cgi-bin/qf_invite?id=2bd1a80d2aa9dcea40653a04299fc3248c6c30dd9468d0d3" target="_blank">QQ邮件列表</a>
-          </p>
-          <form id="subscribe" method="post" action="http://list.qq.com/cgi-bin/qf_compose_send" target="_blank">
-            <input type="hidden" value="qf_booked_feedback" name="t" />
-            <input type="hidden" value="2bd1a80d2aa9dcea40653a04299fc3248c6c30dd9468d0d3" name="id" />
-            <input type="email" name="to" id="to" placeholder="Email" />
-            <div class="text-right">
-              <button class="btn" type="submit">订阅邮件</button>
+
+        </div> <!-- / .card -->
+
+      </div>
+      <div class="col-md-4">
+    
+        <!-- Card -->
+        <div class="card card-tall card-stretch card-standout box-shadow border-0 mb-3 md-md-0">
+      
+          <!-- Image -->
+          <div class="bg-cover" style="background-image: url(https://simpleqode.bitbucket.io/incline/assets/img/22.jpg)"></div>
+
+          <!-- Overlay -->
+          <div class="bg-overlay"></div>
+
+          <!-- Body -->
+          <div class="card-body">
+
+            <!-- Icon -->
+            <div class="card-icon text-primary">
+              <span class="icon icon-tick"></span>
             </div>
-          </form>
-        </li>
-      </ul>
+      
+            <!-- Title -->
+            <h4 class="card-title text-white">
+              Landing pages
+            </h4>
 
-    </div>
+            <!-- Text -->
+            <p class="card-text text-white text-muted mb-0">
+              Beautiful marketing pages to help you promote your product or a service.
+            </p>
 
-  </div>
-</div>
+          </div>
 
-<div id="loader" class="container hide">
-  <div class="row-fluid">
-    <div class="span12">
-      <pre style="text-align:center">加载中...</pre>
-    </div>
-  </div>
-</div>
+        </div> <!-- / .card -->
+
+      </div>
+      <div class="col-md-4">
+    
+        <!-- Card -->
+        <div class="card card-tall card-stretch border-0">
+      
+          <!-- Image -->
+          <div class="bg-cover" style="background-image: url(https://simpleqode.bitbucket.io/incline/assets/img/15.jpg)"></div>
+
+          <!-- Overlay -->
+          <div class="bg-overlay"></div>
+
+          <!-- Body -->
+          <div class="card-body">
+
+            <!-- Icon -->
+            <div class="card-icon text-primary">
+              <span class="icon icon-puzzle"></span>
+            </div>
+      
+            <!-- Title -->
+            <h4 class="card-title text-white">
+              Custom components
+            </h4>
+
+            <!-- Text -->
+            <p class="card-text text-white text-muted mb-0">
+              Combine dozens of components to create unique layouts.
+            </p>
+
+          </div>
+
+        </div> <!-- / .card -->
+
+      </div>
+    </div> <!-- / .row -->
+  </div> <!-- / .container -->
+
+</section>
 
 <!--#include="footer.part"-->
 
+<!-- JAVASCRIPT
+    ================================================== -->
+
 <!--#include="script.part"-->
-<!--Powered By OurJS -->
 </body>
 </html>

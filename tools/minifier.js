@@ -1,8 +1,7 @@
-var fs        = require("fs")
-  , jsp       = require("uglify-js").parser
-  , pro       = require("uglify-js").uglify
-  , cssshrink = require('cssshrink')
-  ;
+var fs = require("fs"),
+  jsp = require("uglify-js").parser,
+  pro = require("uglify-js").uglify,
+  cssshrink = require('cssshrink');
 
 var js = function(inputFile, outputFile) {
   var ast = jsp.parse(fs.readFileSync(inputFile).toString()); // parse code and get the initial AST
@@ -15,7 +14,7 @@ var js = function(inputFile, outputFile) {
   console.log('minified js:', inputFile, outputFile);
 };
 
-var css = function(inputFile, outputFile) {  
+var css = function(inputFile, outputFile) {
   var codes = cssshrink.shrink(fs.readFileSync(inputFile).toString());
   fs.writeFileSync(outputFile, codes + '/* Powered by OurJS.com */', "utf-8");
 
@@ -29,9 +28,8 @@ var css = function(inputFile, outputFile) {
     return
   }
 
-  var inputFile   = args[2]
-    , outputFile  = args[3]
-    ;
+  var inputFile = args[2],
+    outputFile = args[3];
 
   if (inputFile.substr(inputFile.length - 4) == '.css') {
     css(inputFile, outputFile);

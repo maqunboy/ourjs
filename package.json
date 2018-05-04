@@ -1,14 +1,17 @@
 {
-  "name": "ourjs", 
-  "description": "Free Blog Engine, Forum System, Website Template and CMS Platform based on Node.JS and Redis", 
-  "repository" : "http://github.com/newghost/ourjs",
+  "name": "ourjs",
+  "description": "Free Blog Engine, Forum System, Website Template and CMS Platform based on Node.JS and Redis",
+  "repository": "http://github.com/newghost/ourjs",
   "version": "0.1.1",
+  "scripts": {
+    "start": "node ./svr/ourjs.js config.js"
+  },
   "dependencies": {
-      "websvr"         : "0.1.x"
-    , "websvr-redis"   : "0.0.x"
-    , "cssshrink"      : "0.x"
-    , "uglify-js"      : "1.x"
-    , "redis"          : "2.2.5"
-    , "redblade"       : "0.0.x"
+    "websvr": "0.1.x",
+    "websvr-redis": "0.0.x",
+    "cssshrink": "0.x",
+    "uglify-js": "1.x",
+    "redis": "2.2.5",
+    "redblade": "0.0.x"
   }
 }

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>用户登录</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+</head>
+<body>
+<!--[if lt IE 7 ]>
+<div style="z-index: 10000; top: 0px; left: 0px; right: 0px; bottom: 0px; position: fixed; background: #000; color: #fff; text-align: center;padding:60px">
+  抱歉我们不支持IE6及以下版本<br>请更换现代浏览器，或使用手机浏览
+</div>
+<![endif]-->
+  
+  <style>
+    .content> ul {
+      display: flex;
+      flex-direction: row;
+      width: 50%;
+      padding: 0;
+      margin: 2rem auto;
+    }
+    .content > ul > li {
+      list-style: none;
+      padding: 10px;
+      border: 1px solid #eee;
+      cursor: pointer;
+      flex: 1;
+      text-align: center;
+    }
+
+    .content > ul > .cur {
+      background: #eee;
+    }
+
+    .content > div {
+      display: none;
+    }
+
+    .content > .cur {
+      display: block;
+      width: 30%;
+      border: 1px solid #eee;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+
+  </style>
+
+  <div class="content">
+
+    <ul>
+      <li class="cur">用户注册</li>
+      <li>用户登录</li>
+    </ul>
+
+    <!-- 切换菜单 -->
+    <div class="cur">
+      <form class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label" for="signupUsername">用户名</label>
+          <div class="controls">
+            <input type="text" id="signupUsername" name="username" placeholder="用户名">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="signupEmail">邮箱</label>
+          <div class="controls">
+            <input type="text" id="signupEmail" name="email" placeholder="邮箱">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="signupPassword">密码</label>
+          <div class="controls">
+            <input type="password" id="signupPassword" name="password" placeholder="密码">
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="controls">
+            <label class="checkbox">
+              <input name="autosign" class="signinRemember" type="checkbox" checked="checked"> 自动登录
+            </label>
+            <label class="checkbox">
+              <input id="signupSubscribe" type="checkbox" checked="checked"> 订阅邮件周刊
+            </label>
+          </div>
+        </div>
+        <input type="submit" class="hide" />
+      </form>
+    </div>
+    <div>
+      <div>
+        <div class="control-group">
+          <label class="control-label" for="signinUsername" required>登录名</label>
+          <div class="controls">
+            <input type="text" id="signinUsername" name="username" placeholder="用户名">
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="signinPassword">密码</label>
+          <div class="controls">
+            <input type="password" id="signinPassword" name="password" placeholder="密码">
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="controls">
+            <label class="checkbox">
+              <input name="autosign" class="signinRemember" type="checkbox" checked="checked"> 自动登录
+            </label>
+          </div>
+        </div>
+        <button id="up">提交</button>
+        <button onclick="window.location.href = '/'">取消</button>
+      </div>
+    </div>
+    
+  </div>
+  <script src="/js/jquery.min.js"></script>
+  <script>
+      
+      (function () {
+        
+        /**
+         * 点击切换tab
+         */
+        let Li_dom = document.querySelectorAll(".content ul li");
+
+        Li_dom.forEach(function (item, index) {
+
+          item.onclick = function () {
+
+              $(item).addClass("cur").siblings().removeClass('cur');
+              $(".content>div").eq(index).addClass("cur").siblings().removeClass('cur');
+
+          }
+
+        });
+
+        /**
+         * 点击确定接口
+         */
+        $('#up').click(() => {
+          $.post("/user.signin.post",{
+            username: $('#signinUsername').val(),
+            password: $('#signinPassword').val()
+          }, result=> {
+
+              if (result && result.username) {
+                window.location.href = '/';
+              } else {
+                alert('登录失败！　请检查用户名或密码');
+              }
+              
+          });
+        })
+
+      })();
+
+  </script>
+</body>
+</html>

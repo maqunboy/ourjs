@@ -1,7 +1,8 @@
 /* NProgress, (c) 2013, 2014 Rico Sta. Cruz - http://ricostacruz.com/nprogress
  * @license MIT */
 
-;(function(root, factory) {
+;
+(function(root, factory) {
 
   if (typeof define === 'function' && define.amd) {
     define(factory);
@@ -68,9 +69,9 @@
     NProgress.status = (n === 1 ? null : n);
 
     var progress = NProgress.render(!started),
-        bar      = progress.querySelector(Settings.barSelector),
-        speed    = Settings.speed,
-        ease     = Settings.easing;
+      bar = progress.querySelector(Settings.barSelector),
+      speed = Settings.speed,
+      ease = Settings.easing;
 
     progress.offsetWidth; /* Repaint */
 
@@ -83,16 +84,16 @@
 
       if (n === 1) {
         // Fade out
-        css(progress, { 
-          transition: 'none', 
-          opacity: 1 
+        css(progress, {
+          transition: 'none',
+          opacity: 1
         });
         progress.offsetWidth; /* Repaint */
 
         setTimeout(function() {
-          css(progress, { 
-            transition: 'all ' + speed + 'ms linear', 
-            opacity: 0 
+          css(progress, {
+            transition: 'all ' + speed + 'ms linear',
+            opacity: 0
           });
           setTimeout(function() {
             NProgress.remove();
@@ -182,33 +183,34 @@
    * @param $promise jQUery Promise
    */
   (function() {
-    var initial = 0, current = 0;
-    
+    var initial = 0,
+      current = 0;
+
     NProgress.promise = function($promise) {
       if (!$promise || $promise.state() == "resolved") {
         return this;
       }
-      
+
       if (current == 0) {
         NProgress.start();
       }
-      
+
       initial++;
       current++;
-      
+
       $promise.always(function() {
         current--;
         if (current == 0) {
-            initial = 0;
-            NProgress.done();
+          initial = 0;
+          NProgress.done();
         } else {
-            NProgress.set((initial - current) / initial);
+          NProgress.set((initial - current) / initial);
         }
       });
-      
+
       return this;
     };
-    
+
   })();
 
   /**
@@ -220,16 +222,16 @@
     if (NProgress.isRendered()) return document.getElementById('nprogress');
 
     addClass(document.documentElement, 'nprogress-busy');
-    
+
     var progress = document.createElement('div');
     progress.id = 'nprogress';
     progress.innerHTML = Settings.template;
 
-    var bar      = progress.querySelector(Settings.barSelector),
-        perc     = fromStart ? '-100' : toBarPerc(NProgress.status || 0),
-        parent   = document.querySelector(Settings.parent),
-        spinner;
-    
+    var bar = progress.querySelector(Settings.barSelector),
+      perc = fromStart ? '-100' : toBarPerc(NProgress.status || 0),
+      parent = document.querySelector(Settings.parent),
+      spinner;
+
     css(bar, {
       transition: 'all 0 linear',
       transform: 'translate3d(' + perc + '%,0,0)'
@@ -277,9 +279,9 @@
 
     // Sniff prefixes
     var vendorPrefix = ('WebkitTransform' in bodyStyle) ? 'Webkit' :
-                       ('MozTransform' in bodyStyle) ? 'Moz' :
-                       ('msTransform' in bodyStyle) ? 'ms' :
-                       ('OTransform' in bodyStyle) ? 'O' : '';
+      ('MozTransform' in bodyStyle) ? 'Moz' :
+      ('msTransform' in bodyStyle) ? 'ms' :
+      ('OTransform' in bodyStyle) ? 'O' : '';
 
     if (vendorPrefix + 'Perspective' in bodyStyle) {
       // Modern browsers with 3D support, e.g. Webkit, IE10
@@ -322,14 +324,20 @@
     var barCSS;
 
     if (Settings.positionUsing === 'translate3d') {
-      barCSS = { transform: 'translate3d('+toBarPerc(n)+'%,0,0)' };
+      barCSS = {
+        transform: 'translate3d(' + toBarPerc(n) + '%,0,0)'
+      };
     } else if (Settings.positionUsing === 'translate') {
-      barCSS = { transform: 'translate('+toBarPerc(n)+'%,0)' };
+      barCSS = {
+        transform: 'translate(' + toBarPerc(n) + '%,0)'
+      };
     } else {
-      barCSS = { 'margin-left': toBarPerc(n)+'%' };
+      barCSS = {
+        'margin-left': toBarPerc(n) + '%'
+      };
     }
 
-    barCSS.transition = 'all '+speed+'ms '+ease;
+    barCSS.transition = 'all ' + speed + 'ms ' + ease;
 
     return barCSS;
   }
@@ -340,7 +348,7 @@
 
   var queue = (function() {
     var pending = [];
-    
+
     function next() {
       var fn = pending.shift();
       if (fn) {
@@ -363,8 +371,8 @@
    */
 
   var css = (function() {
-    var cssPrefixes = [ 'Webkit', 'O', 'Moz', 'ms' ],
-        cssProps    = {};
+    var cssPrefixes = ['Webkit', 'O', 'Moz', 'ms'],
+      cssProps = {};
 
     function camelCase(string) {
       return string.replace(/^-ms-/, 'ms-').replace(/-([\da-z])/gi, function(match, letter) {
@@ -377,8 +385,8 @@
       if (name in style) return name;
 
       var i = cssPrefixes.length,
-          capName = name.charAt(0).toUpperCase() + name.slice(1),
-          vendorName;
+        capName = name.charAt(0).toUpperCase() + name.slice(1),
+        vendorName;
       while (i--) {
         vendorName = cssPrefixes[i] + capName;
         if (vendorName in style) return vendorName;
@@ -399,8 +407,8 @@
 
     return function(element, properties) {
       var args = arguments,
-          prop, 
-          value;
+        prop,
+        value;
 
       if (args.length == 2) {
         for (prop in properties) {
@@ -428,9 +436,9 @@
 
   function addClass(element, name) {
     var oldList = classList(element),
-        newList = oldList + name;
+      newList = oldList + name;
 
-    if (hasClass(oldList, name)) return; 
+    if (hasClass(oldList, name)) return;
 
     // Trim the opening space.
     element.className = newList.substring(1);
@@ -442,7 +450,7 @@
 
   function removeClass(element, name) {
     var oldList = classList(element),
-        newList;
+      newList;
 
     if (!hasClass(element, name)) return;
 
@@ -460,7 +468,11 @@
    */
 
   function classList(element) {
+
+    element.className = element.className || "";
+
     return (' ' + (element.className || '') + ' ').replace(/\s+/gi, ' ');
+
   }
 
   /**
@@ -473,4 +485,3 @@
 
   return NProgress;
 });
-

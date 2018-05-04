@@ -3,175 +3,121 @@
   抱歉我们不支持IE6及以下版本<br>请更换现代浏览器，或使用手机浏览
 </div>
 <![endif]-->
+<!-- NAVBAR
+================================================= -->
+<nav class="navbar navbar-expand-xl navbar-dark  navbar-togglable  fixed-top">
+  <div class="container">
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
-      <a href="/" class="brand">any<b>nb</b></a>
+    <!-- Brand -->
+    <a class="navbar-brand" href="index.html">
+      <svg class="navbar-brand-svg" viewBox="0 0 245 80" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+        <text x="40" y="70" font-family="Arial, sans-serif" font-size="80" font-weight="bold" letter-spacing="-.025em" fill="currentColor">MarkeXin</text>
+      </svg>
+    </a>
 
-      <button type="button" class="btn btn-navbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
+    <!-- Toggler -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-      <ul class="nav menu toggle">
-        <li class="dropdown">
-          <a data-toggle="dropdown" class="dropdown-toggle" href="/">
-            <span id="categoryText">阅读</span> <b class="caret"></b>
+    <!-- Collapse -->
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+
+      <!-- Links -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="/root/edit/add">
+            奋笔疾书
           </a>
-          <ul class="dropdown-menu">
-            <li class="nav-header">文章分类</li>
-            <li class="divider"></li>
-            <li><a href="/home">所有文章</a></li>
-            <li><a href="/new">最新文章</a></li>
-            <li class="divider"></li>
-            <li><a href="/rss" target="_blank">RSS订阅</a></li>
-            <li><a href="#top" id="aboutlink">关于我们</a></li>
-          </ul>
         </li>
-        <li class="dropdown pull-right">
-          {{?it.user.username}}
-          <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-            <i class="icon-user"></i>
-            <span>{{=it.user.username || '未登录'}}</span>
-            <b class="caret"></b>
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="/root/news">
+            最新文章
           </a>
-          <ul class="dropdown-menu">
-            <li><a href="/user/{{=it.user.username}}">我的文集</a></li>
-            <li class="divider"></li>
-            <li><a href="/useredit/{{=it.user.username}}">修改资料</a></li>
-            <li class="divider"></li>
-            <li><a href="javascript:OurJS.Users.signout()">退出登录</a></li>
-          </ul>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" href="/root/about">
+            关于我
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          {{?it.user.username}}
+          <a class="nav-link dropdown-toggle" href="#" id="navbarPages" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {{=it.user.username || '未登录'}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarPages">
+            <div><a href="/user/{{=it.user.username}}">我的文集</a></div>
+            <div><a href="/useredit/{{=it.user.username}}">修改资料</a></div>
+            <div><a href="javascript:OurJS.Users.signout()">退出登录</a></div>
+          </div>
           {{??}}
-          <a data-toggle="modal" href="#signup">
-            <i class="icon-user"></i>
-            <span>未登录</span>
-            <b class="caret"></b>
+          <a class="nav-link" href="/signup">
+            未登录
           </a>
           {{?}}
         </li>
-        <li class="pull-right">
-          {{?it.user.username}}
-          <a class="dropdown-toggle" href="/root/edit/add">
-            <i class="icon-edit"></i>
-            <span>发布</span>
+        <!-- <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarPages" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Pages
           </a>
-          {{??}}
-          <a data-toggle="modal" href="#signup">
-            <i class="icon-edit"></i>
-            <span>发布</span>
-          </a>
-          {{?}}
+          <div class="dropdown-menu" aria-labelledby="navbarPages">
+            <a class="dropdown-item " href="about.html">
+              About
+            </a>
+            <a class="dropdown-item " href="checkout.html">
+              Checkout
+            </a>
+            <a class="dropdown-item " href="contact.html">
+              Contact
+            </a>
+            <a class="dropdown-item " href="faq.html">
+              FAQ
+            </a>
+            <a class="dropdown-item " href="pricing.html">
+              Pricing
+            </a>
+            <a class="dropdown-item " href="sign-in.html">
+              Sign In
+            </a>
+            <a class="dropdown-item " href="sign-up.html">
+              Sign Up
+            </a>
+            <a class="dropdown-item " href="404.html">
+              404
+            </a>
+          </div>
         </li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-  <div class="jumbotron">
-    <div id="about" class="hide">
-      <iframe name="subscribeFrame" style="display:none"></iframe>
-
-      <h1 class="brand">Any<b>NB</b></h1>
-      <p class="lead">
-        <br>
-        AnyNB-股市牛博汇
-        <br>
-      </p>
-      <h3>欢迎您订阅我们的邮件周刊</h3>
-      <br>
-      <p class="lead">
-        我们使用第三方邮件列表向您推送，我们<b>不保存您的任何个人资料，注重您的隐私，您可以随时退订</b>,
-        <br>
-      </p>
-      <h3>欢迎分享您的观点，经验，技巧，心得</h3>
-      <hr/>
-      <p>
-        本网站使用缓存技术每次加载仅需很小流量, 可在手机中流畅浏览;
-        <br>
-        如果您发现任何BUG，请即时告知我们： ourjs(at)ourjs.com
-      </p>
-    </div>
-  </div>
-
-  <!-- Modal -->
-  <div id="signup" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-header">
-      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-      <h4 id="myModalLabel">登录或注册</h4>
-    </div>
-    <div class="modal-body">
-      <ul class="nav nav-tabs" id="signtab">
-        <li class="active"><a href="#signuptab">注册</a></li>
-        <li><a href="#signintab">登录</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarComponents" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Components
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarComponents">
+            <a class="dropdown-item " href="components-theme.html">
+              Theme
+            </a>
+            <a class="dropdown-item " href="components-bootstrap.html">
+              Bootstrap
+            </a>
+          </div>
+        </li>
+        <li class="nav-item ">
+          <a href="documentation.html" class="nav-link">
+            Documentation
+          </a>
+        </li>
+        <li class="nav-item-divider">
+          <span class="nav-link">
+            <span></span>
+          </span>
+        </li>
+        <li class="nav-item">
+          <a href="https://themes.getbootstrap.com/product/incline-landing-page-set/" target="_blank" class="nav-link">
+            Purchase now
+          </a>
+        </li> -->
       </ul>
 
-      <div class="tab-content">
-        <div class="tab-pane active" id="signuptab">
-          <form class="form-horizontal">
-            <div class="control-group">
-              <label class="control-label" for="signupUsername">用户名</label>
-              <div class="controls">
-                <input type="text" id="signupUsername" name="username" placeholder="用户名">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="signupEmail">邮箱</label>
-              <div class="controls">
-                <input type="text" id="signupEmail" name="email" placeholder="邮箱">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="signupPassword">密码</label>
-              <div class="controls">
-                <input type="password" id="signupPassword" name="password" placeholder="密码">
-              </div>
-            </div>
-            <div class="control-group">
-              <div class="controls">
-                <label class="checkbox">
-                  <input name="autosign" class="signinRemember" type="checkbox" checked="checked"> 自动登录
-                </label>
-                <label class="checkbox">
-                  <input id="signupSubscribe" type="checkbox" checked="checked"> 订阅邮件周刊
-                </label>
-              </div>
-            </div>
-            <input type="submit" class="hide" />
-          </form>
-        </div>
-        <div class="tab-pane" id="signintab">
-          <form class="form-horizontal">
-            <div class="control-group">
-              <label class="control-label" for="signinUsername" required>登录名</label>
-              <div class="controls">
-                <input type="text" id="signinUsername" name="username" placeholder="用户名">
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="signinPassword">密码</label>
-              <div class="controls">
-                <input type="password" id="signinPassword" name="password" placeholder="密码">
-              </div>
-            </div>
-            <div class="control-group">
-              <div class="controls">
-                <label class="checkbox">
-                  <input name="autosign" class="signinRemember" type="checkbox" checked="checked"> 自动登录
-                </label>
-              </div>
-            </div>
-            <input type="submit" class="hide" />
-          </form>
-        </div>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn" data-dismiss="modal" aria-hidden="true">取消</button>
-      <button id="signOK" class="btn btn-primary">确定</button>
-    </div>
-  </div>
-</div>
+    </div> <!-- / .navbar-collapse -->
+
+  </div> <!-- / .container -->    
+</nav>

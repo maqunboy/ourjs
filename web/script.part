@@ -13,10 +13,16 @@ ga('send', 'pageview');
 {{??}}
 <!--#output="/js/prod.min.js"-->
 <script src="/js/jquery.min.js"></script>
+<script src="/js/flickity/flickity.pkgd.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/parallax.min.js"></script>
+<script src="/js/jquery.waypoints.min.js"></script>
+<script src="/js/inview.min.js"></script>
+<script src="/js/highlight.pack.min.js"></script>
 <script src="/js/wysihtml5.js"></script>
 <script src="/js/jquery.validate.js"></script>
 <script src="/js/jquery.cookie.js"></script>
+<script src="/js/theme.min.js"></script>
 <script src="/js/bootstrap-wysihtml5.js"></script>
 <script src="/js/Markdown.Converter.js"></script>
 <script src="/js/Markdown.Sanitizer.js"></script>

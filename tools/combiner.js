@@ -3,24 +3,24 @@ Author  : Kris Zhang: http://github.com/newghost
 License : MIT
 */
 
-var fs    = require('fs')
-  , path  = require('path')
+var fs = require('fs'),
+  path = require('path')
 
 
 var Combine = function(inputFile, outputFile, removeLines, baseFolder) {
 
-  var TARGET  = {}
-    , curJS   = ''
-    , curCSS  = ''
-    , CTRL  
+  var TARGET = {},
+    curJS = '',
+    curCSS = '',
+    CTRL
 
   var mergeCssJs = function() {
-    var files         = Object.keys(TARGET)
-      , inputFolder   = baseFolder || path.dirname(inputFile)
+    var files = Object.keys(TARGET),
+      inputFolder = baseFolder || path.dirname(inputFile)
 
     files.forEach(function(targetFile) {
 
-      var files  = TARGET[targetFile]
+      var files = TARGET[targetFile]
 
       files.forEach(function(file, idx) {
         var filePath = path.join(inputFolder, file)
@@ -34,17 +34,17 @@ var Combine = function(inputFile, outputFile, removeLines, baseFolder) {
       })
 
       //target File Path may have domain
-      var targetFilePath  = targetFile
-        , idx             = targetFilePath.indexOf('//') 
+      var targetFilePath = targetFile,
+        idx = targetFilePath.indexOf('//')
 
       if (idx > -1) {
         targetFilePath = targetFilePath.substr(idx + 2)
         targetFilePath = targetFilePath.substr(targetFilePath.indexOf('/'))
       }
 
-      targetFilePath = targetFilePath.indexOf('?') > -1
-        ? targetFilePath.substr(0, targetFilePath.indexOf('?'))
-        : targetFilePath
+      targetFilePath = targetFilePath.indexOf('?') > -1 ?
+        targetFilePath.substr(0, targetFilePath.indexOf('?')) :
+        targetFilePath
 
       fs.writeFile(path.join(inputFolder, targetFilePath), TARGET[targetFile].join(CTRL), function(err) {
         if (err) {
@@ -75,8 +75,8 @@ var Combine = function(inputFile, outputFile, removeLines, baseFolder) {
     var formatLine = line.trim().toLowerCase()
 
     if (formatLine.indexOf('<!--#output=end-->') > -1) {
-      curCSS  = ''
-      curJS   = ''
+      curCSS = ''
+      curJS = ''
     }
 
     //<!--#output="/css/all.css"-->
@@ -133,9 +133,9 @@ var Combine = function(inputFile, outputFile, removeLines, baseFolder) {
     fs.readFile(inputFile, function(err, data) {
       var CODES = data.toString()
 
-      CTRL  = CODES.indexOf('\r\n') > 0 ? '\r\n' : '\n'
+      CTRL = CODES.indexOf('\r\n') > 0 ? '\r\n' : '\n'
 
-      var codes   = CODES.split(/[\r\n]+/g)
+      var codes = CODES.split(/[\r\n]+/g)
 
       if (removeLines) {
         codes = codes.map(pickupFiles)
@@ -161,11 +161,11 @@ var Combine = function(inputFile, outputFile, removeLines, baseFolder) {
 /*
 node combiner inputFile ouptFile
 */
-var defaultCommand  = function() {
-  var inputFile     = process.argv[2]
-    , outputFile    = process.argv[3] || ''
-    , removeLines   = process.argv.indexOf('-r') > 0
-    , baseIdx       = process.argv.indexOf('-base')
+var defaultCommand = function() {
+  var inputFile = process.argv[2],
+    outputFile = process.argv[3] || '',
+    removeLines = process.argv.indexOf('-r') > 0,
+    baseIdx = process.argv.indexOf('-base')
 
   if (outputFile[0] == '-') {
     outputFile = null

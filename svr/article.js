@@ -1,32 +1,32 @@
 /*!@preserve
-* OurJS     : Free Blog Engine, Forum System, Website Template and CMS Platform based on Node.JS
-* Copyright : Kris Zhang <kris.newghost@gmail.com>
-* Homepage  : http://code.ourjs.com
-* Project   : https://github.com/newghost/ourjs
-* License   : BSD
-*/
+ * OurJS     : Free Blog Engine, Forum System, Website Template and CMS Platform based on Node.JS
+ * Copyright : Kris Zhang <kris.newghost@gmail.com>
+ * Homepage  : http://code.ourjs.com
+ * Project   : https://github.com/newghost/ourjs
+ * License   : BSD
+ */
 
-var fs              = require('fs')
-  , path            = require('path')
-  , redblade        = require('redblade')
-  , utility         = require('./utility')
-  , config          = global.CONFIG
+var fs = require('fs'),
+  path = require('path'),
+  redblade = require('redblade'),
+  utility = require('./utility'),
+  config = global.CONFIG
 
 /*
 分页
 */
 var getPagination = function(config, pagerFormat) {
-  var interval = 5
-    , curPager = config.pager || 0
-    , maxPager = config.count / config.pageSize | 0
-    , startPos = curPager - (interval / 2 | 0)
+  var interval = 5,
+    curPager = config.pager || 0,
+    maxPager = config.count / config.pageSize | 0,
+    startPos = curPager - (interval / 2 | 0)
 
 
   maxPager - startPos < interval && (startPos = maxPager - interval)
   startPos < 1 && (startPos = 1)
 
-  var pagination  = ''
-    , paginations = []
+  var pagination = '',
+    paginations = []
 
 
   var addPage = function(pager) {
@@ -52,15 +52,17 @@ var getPagination = function(config, pagerFormat) {
 
 //handle: /templatename/category/pagenumber, etc: /home/all/0, /home, /json/all/0
 var showListHandler = function(req, res, url) {
-  var params      = app.parseUrl('/:tmpl/:keyword/:pagerNumber', url || req.url)
-    , tmpl        = params.tmpl || 'home'
-    , keyword     = params.keyword  || ''
-    , pageNumber  = parseInt(params.pagerNumber) || 0
-    , pageSize    = 20
-    , user        = req.session.get('user') || {}
+  var params = app.parseUrl('/:tmpl/:keyword/:pagerNumber', url || req.url),
+    tmpl = params.tmpl || 'home',
+    keyword = params.keyword || '',
+    pageNumber = parseInt(params.pagerNumber) || 0,
+    pageSize = 20,
+    user = req.session.get('user') || {}
 
 
-  var where = { isPublic: 1 }
+  var where = {
+    isPublic: 1
+  }
 
   /*
   当地址是 /new　时，显示最新未审核的文章: isPublic = 0
@@ -68,7 +70,7 @@ var showListHandler = function(req, res, url) {
   会自动在redis中添加索引 zadd isPublic:0 [时间权重如：1448377366038] [article ID]
   */
   if (tmpl == 'new') {
-    where.isPublic  = 0
+    where.isPublic = 0
   }
 
   /*
@@ -88,26 +90,32 @@ var showListHandler = function(req, res, url) {
     var tmplate = tmpl == 'new' ? 'home' : tmpl
 
     res.render(tmplate + ".tmpl", {
-        articles    : articles
-      , keyword     : keyword
-      , nextPage    : '/' + tmpl + '/' + keyword + '/' + (pageNumber + 1)
-      , pagination  : getPagination({
-            pageSize  : pageSize
-          , pager     : pageNumber
-          , count     : count
-        }, '<li {1}><a href="/' + tmpl + '/' + keyword + '/{0}">{2}</a></li>')
+      articles: articles,
+      keyword: keyword,
+      nextPage: '/' + tmpl + '/' + keyword + '/' + (pageNumber + 1),
+      pagination: getPagination({
+        pageSize: pageSize,
+        pager: pageNumber,
+        count: count
+      }, '<li {1}><a href="/' + tmpl + '/' + keyword + '/{0}">{2}</a></li>')
     })
 
-  }, { from: pageNumber * pageSize, to: (pageNumber + 1) * pageSize, desc: true })
+  }, {
+    from: pageNumber * pageSize,
+    to: (pageNumber + 1) * pageSize,
+    desc: true
+  })
 }
 
 
 //handle detail.tmpl: content of article
 var showDetailHandler = function(req, res) {
-  var tmpl  = req.url.split('/')[1]     //get the template name
-    , id    = req.params.id             //get the object id
-    , key   = 'article:' + id
-    , user  = req.session.get('user') || {}
+  var tmpl = req.url.split('/')[1] //get the template name
+    ,
+    id = req.params.id //get the object id
+    ,
+    key = 'article:' + id,
+    user = req.session.get('user') || {}
 
   if (id) {
     //直接访问原文地址前访问量+1，方便做排行榜，只取跳转url即可
@@ -129,8 +137,8 @@ var showDetailHandler = function(req, res) {
         redblade.client.hincrby(key, 'visitNum', 1)
         redblade.client.hgetall('user:' + article.poster, function(err, posterInfo) {
           res.render(tmpl + ".tmpl", {
-              article : article
-            , poster  : posterInfo || {}
+            article: article,
+            poster: posterInfo || {}
           })
         })
       } else {
@@ -150,7 +158,6 @@ app.get(['/article/:id', '/redirect/:id'], showDetailHandler)
 
 
 
-
 module.exports = {
-    showListHandler : showListHandler
+  showListHandler: showListHandler
 }

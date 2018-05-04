@@ -1,7 +1,7 @@
 /*!
-* OurJS.org
-* Copyright Kris Zhang (kris.newghost@gmail.com)
-*/
+ * OurJS.org
+ * Copyright Kris Zhang (kris.newghost@gmail.com)
+ */
 
 /*
 jQuery Plugin
@@ -26,8 +26,8 @@ jQuery Plugin
 
 
 /*
-* debug
-*/
+ * debug
+ */
 window.console = window.console || {
   log: function() {}
 }
@@ -46,10 +46,9 @@ Navigation
     var hasActive = false;
 
     $("ul.nav.toggle li>a").each(function() {
-      var $link = $(this)
-        , href  = $link.attr('href') || 'NO-ATTR-VALUE'
-        , path  = decodeURIComponent(location.pathname)
-        ;
+      var $link = $(this),
+        href = $link.attr('href') || 'NO-ATTR-VALUE',
+        path = decodeURIComponent(location.pathname);
 
       //remove '/'
       if (path.length > 1 && href.length > 1 && (href.indexOf(path) > -1 || path.indexOf(href) > -1)) {
@@ -62,15 +61,15 @@ Navigation
     !hasActive && $('ul.nav>li').eq(0).addClass('active');
 
     var $navs = $(".nav.toggle>li").click(function(e) {
-      var $this = $(this)
-        , $about = $("#about");
+      var $this = $(this),
+        $about = $("#about");
 
       $navs.removeClass("active");
       $this.addClass("active");
 
-      $(e.target).attr("id") == "aboutlink"
-        ? $about.slideDown()
-        : $about.slideUp();
+      $(e.target).attr("id") == "aboutlink" ?
+        $about.slideDown() :
+        $about.slideUp();
     });
   };
 
@@ -107,13 +106,11 @@ Format reference url
 
 
 
-
-
 /*
 Regist/Edit user functionalities
 */
 (function() {
-  
+
   var refresh = function() {
     //signIn(userInfo);
     window.setTimeout(function() {
@@ -122,15 +119,14 @@ Regist/Edit user functionalities
   };
 
   var init = function() {
-    $('#signtab a').click(function (e) {
+    $('#signtab a').click(function(e) {
       e.preventDefault();
       $(this).tab('show');
     });
 
     var submitHandler = function(e) {
-      var $form     = $('#signup form:visible')
-        , userInfo  = $form.toJSON()
-        ;
+      var $form = $('#signup form:visible'),
+        userInfo = $form.toJSON();
 
       e && e.preventDefault();
 
@@ -141,6 +137,7 @@ Regist/Edit user functionalities
       $("#signOK").attr("disabled", true);
 
       if ($form.closest('#signuptab').size() > 0) {
+        alert(1);
         $.post('/user.signup.post', userInfo, function(userInfo) {
           $("#signOK").attr("disabled", false);
           if (userInfo && userInfo.username) {
@@ -158,13 +155,15 @@ Regist/Edit user functionalities
 
       if ($form.closest('#signintab').size() > 0) {
         $("#signOK").attr("disabled", false);
-        $.post('/user.signin.post', userInfo, function(userInfo) {
-          if (userInfo && userInfo.username) {
-            refresh();
-          } else {
-            alert('登录失败！　请检查用户名或密码');
-          }
-        }, 'json');
+
+        alert(2);
+        // $.post('/user.signin.post', userInfo, function(userInfo) {
+        //   if (userInfo && userInfo.username) {
+        //     refresh();
+        //   } else {
+        //     alert('登录失败！　请检查用户名或密码');
+        //   }
+        // }, 'json');
       }
 
       return false;
@@ -172,23 +171,42 @@ Regist/Edit user functionalities
 
     $('#signuptab form').submit(submitHandler).validate({
       rules: {
-          username: { minlength: 4, maxlength: 16, required: true }
-        , password: { minlength: 4, maxlength: 32, required: true }
-        , email:    { minlength: 4, maxlength: 64, email: true}
+        username: {
+          minlength: 4,
+          maxlength: 16,
+          required: true
+        },
+        password: {
+          minlength: 4,
+          maxlength: 32,
+          required: true
+        },
+        email: {
+          minlength: 4,
+          maxlength: 64,
+          email: true
+        }
       }
     });
 
     $('#signintab form').submit(submitHandler).validate({
       rules: {
-          username: { minlength: 4, maxlength: 16, required: true }
-        , password: { minlength: 4, maxlength: 32, required: true }
+        username: {
+          minlength: 4,
+          maxlength: 16,
+          required: true
+        },
+        password: {
+          minlength: 4,
+          maxlength: 32,
+          required: true
+        }
       }
     });
 
     $("#signOK")
       .attr("disabled", false)
-      .click(submitHandler)
-      ;
+      .click(submitHandler);
 
     $("#useredit form").submit(function(e) {
       var $form = $(this);
@@ -207,22 +225,41 @@ Regist/Edit user functionalities
       }
     }).validate({
       rules: {
-          password:     { minlength: 3, maxlength: 32, required: true }
-        , email:        { minlength: 3, maxlength: 64, email: true, required: true}
-        , company:      { maxlength: 32 }
-        , briefinfo:    { maxlength: 300 }
-        , newPassword:  { minlength: 3, maxlength: 32 }
-        , confPassword: { minlength: 3, maxlength: 32, equalTo: "#newPassword" }
+        password: {
+          minlength: 3,
+          maxlength: 32,
+          required: true
+        },
+        email: {
+          minlength: 3,
+          maxlength: 64,
+          email: true,
+          required: true
+        },
+        company: {
+          maxlength: 32
+        },
+        briefinfo: {
+          maxlength: 300
+        },
+        newPassword: {
+          minlength: 3,
+          maxlength: 32
+        },
+        confPassword: {
+          minlength: 3,
+          maxlength: 32,
+          equalTo: "#newPassword"
+        }
       }
     });
 
     $('.formatdate').each(function() {
-      var $timeSpan = $(this)
-        , postTime = parseInt($timeSpan.text())
-        , fromNow  = (new Date() - postTime) / 1000 | 0
-        , isDate  = $timeSpan.hasClass('date')
-        , dateStr
-        ;
+      var $timeSpan = $(this),
+        postTime = parseInt($timeSpan.text()),
+        fromNow = (new Date() - postTime) / 1000 | 0,
+        isDate = $timeSpan.hasClass('date'),
+        dateStr;
 
       if (fromNow < 0 || isDate) {
         dateStr = formatDateTime(postTime, isDate);
@@ -253,15 +290,14 @@ Regist/Edit user functionalities
 
     date = new Date(date);
 
-    var Y = date.getFullYear()
-      , M = date.getMonth() + 1
-      , D = date.getDate()
-      , h = date.getHours()
-      , m = date.getMinutes()
-      , s = date.getSeconds()
-      ;
+    var Y = date.getFullYear(),
+      M = date.getMonth() + 1,
+      D = date.getDate(),
+      h = date.getHours(),
+      m = date.getMinutes(),
+      s = date.getSeconds();
 
-    var date = Y  + '-' + addPrefix(M) + '-' + addPrefix(D);
+    var date = Y + '-' + addPrefix(M) + '-' + addPrefix(D);
     var time = addPrefix(h) + ':' + addPrefix(m) + ':' + addPrefix(s);
 
     return isDate ? date : (date + ' ' + time);
@@ -276,8 +312,8 @@ Regist/Edit user functionalities
   init();
 
   OurJS.Users = {
-      refresh   : refresh
-    , signout   : signout
+    refresh: refresh,
+    signout: signout
   };
 
   OurJS.formatDateTime = formatDateTime;
@@ -294,7 +330,7 @@ Edit Page
 
   var $chkContent = $('#chkContent').change(function() {
     $('.contentWrapper').toggle()
-  })  
+  })
 
   if (content) {
     $('#content').val(content)
@@ -303,9 +339,9 @@ Edit Page
 
   //Edit mode
   $("input, textarea").each(function() {
-    var $this = $(this)
-      , val   = $this.val();
-    val.length < 20  && val.trim() == 'undefined' && $this.val('');
+    var $this = $(this),
+      val = $this.val();
+    val.length < 20 && val.trim() == 'undefined' && $this.val('');
   });
 
 
@@ -314,14 +350,14 @@ Edit Page
   edit plugins
   */
   $('.editor').wysihtml5({
-      html: true
-    , stylesheets: ["/css/libs.min.css", "/css/prod.min.css?v=217"]
+    html: true,
+    stylesheets: ["/css/libs.min.css", "/css/prod.min.css?v=217"]
   });
 
   $('.autocomplete').magicSuggest({
-      placeholder : '[可不填]'
-    , value       : keyword  || ''
-    , data        : keywords || []
+    placeholder: '[可不填]',
+    value: keyword || '',
+    data: keywords || []
   });
 
 }());
@@ -337,14 +373,13 @@ Edit Page
 
   //navigation selected;
   $('.pagination>ul>li>a').each(function() {
-    var $this = $(this)
-      , href  = $this.attr('href')
-      , idx   = urlLocation.indexOf(href)
-      ;
+    var $this = $(this),
+      href = $this.attr('href'),
+      idx = urlLocation.indexOf(href);
     if (idx > -1 && !jQuery.isNumeric(urlLocation.charAt(idx + href.length))) {
       makeActive($this);
     }
-  });  
+  });
 
   $('.pagination>ul>li.active').size() < 1 && makeActive($('.pagination>ul>li>a').eq(0));
 
@@ -362,16 +397,14 @@ Edit Page
 
 
 
-
-
 /*
-* dropdown menu
-*/
+ * dropdown menu
+ */
 (function() {
 
   var $menuNav = $('.menu.nav');
 
-  var $btnNavBar = $('.btn.btn-navbar').on('click', function() {    
+  var $btnNavBar = $('.btn.btn-navbar').on('click', function() {
     $menuNav.css('display', $menuNav.is(':visible') ? '' : 'block');
   });
 
@@ -393,16 +426,16 @@ Edit Page
 
 (function() {
 
-  var browser   = $.browser || {}
-    , progress  = NProgress
+  var browser = $.browser || {},
+    progress = NProgress
 
   if (browser.msie && $.browser.versionNumber < 8) {
     return
   }
 
   progress.configure({
-      parent    : '.navbar .navbar-inner'
-    , template  : '<div class="bar" role="bar"></div>'
+    parent: '.navbar .navbar-inner',
+    template: '<div class="bar" role="bar"></div>'
   })
 
   progress.start()

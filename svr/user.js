@@ -1,23 +1,27 @@
 /*!@preserve
-* OurJS     : Free Blog Engine, Forum System, Website Template and CMS Platform based on Node.JS
-* Copyright : Kris Zhang <kris.newghost@gmail.com>
-* Homepage  : http://code.ourjs.com
-* Project   : https://github.com/newghost/ourjs
-* License   : BSD
-*/
+ * OurJS     : Free Blog Engine, Forum System, Website Template and CMS Platform based on Node.JS
+ * Copyright : Kris Zhang <kris.newghost@gmail.com>
+ * Homepage  : http://code.ourjs.com
+ * Project   : https://github.com/newghost/ourjs
+ * License   : BSD
+ */
 
 /*
-* User Handlers
-*/
-var fs              = require('fs')
-  , utility         = require('./utility')
-  , WEBSVR_CONFIG   = require('../config').WEBSVR_CONFIG
-  , redblade        = require('redblade')
+ * User Handlers
+ */
+var fs = require('fs'),
+  utility = require('./utility'),
+  WEBSVR_CONFIG = require('../config').WEBSVR_CONFIG,
+  redblade = require('redblade')
 
 
 var setAutoSignin = function(req, res, userInfo) {
-  var date = new Date(+new Date() + 365 * 24 * 3600 * 1000)
-    , opts = { path: '/', expires: date, httponly: true }
+  var date = new Date(+new Date() + 365 * 24 * 3600 * 1000),
+    opts = {
+      path: '/',
+      expires: date,
+      httponly: true
+    }
 
   WEBSVR_CONFIG.sessionDomain && (opts.domain = WEBSVR_CONFIG.sessionDomain)
 
@@ -30,8 +34,8 @@ var getAutoSignin = function(cookieInfo, cb) {
   if (cookieInfo.t0 && cookieInfo.t1 && cookieInfo.t2) {
     redblade.client.hgetall('user:' + cookieInfo.t0, function(err, userInfo) {
       if (!err && userInfo) {
-        var t1 = utility.getEncryption(userInfo.email, WEBSVR_CONFIG.AUTOSIGN_TOKEN)
-          , t2 = utility.getEncryption(userInfo.joinedTime, WEBSVR_CONFIG.AUTOSIGN_TOKEN)
+        var t1 = utility.getEncryption(userInfo.email, WEBSVR_CONFIG.AUTOSIGN_TOKEN),
+          t2 = utility.getEncryption(userInfo.joinedTime, WEBSVR_CONFIG.AUTOSIGN_TOKEN)
 
         if (cookieInfo.t1 == t1 && cookieInfo.t2 == t2) {
           cb && cb(userInfo)
@@ -41,7 +45,7 @@ var getAutoSignin = function(cookieInfo, cb) {
       cb && cb()
     })
   } else {
-    cb && cb() 
+    cb && cb()
   }
 }
 
@@ -84,25 +88,28 @@ var signin = function(signinUser, cb) {
 }
 
 var signHandler = function(req, res, userInfo) {
-  if (userInfo && userInfo.username)  {
+  if (userInfo && userInfo.username) {
     req.session.set('user', userInfo)
 
     if (req.body.autosign === 'on') {
       setAutoSignin(req, res, userInfo)
     }
 
-    req.url.indexOf('redirect') < 0
-      ? res.send({username: userInfo.username, avatar: userInfo.avatar})
-      : res.redirect('/')
+    req.url.indexOf('redirect') < 0 ?
+      res.send({
+        username: userInfo.username,
+        avatar: userInfo.avatar
+      }) :
+      res.redirect('/')
 
     return true
   }
 
   req.url.indexOf('redirect') < 0 && res.send({})
   res.send(
-    req.url.indexOf('signin') > 0
-      ? MESSAGES.USERNAME_PASSWORD_NOT_MATCH
-      : MESSAGES.DUPLICATED
+    req.url.indexOf('signin') > 0 ?
+    MESSAGES.USERNAME_PASSWORD_NOT_MATCH :
+    MESSAGES.DUPLICATED
   )
 
   return false
@@ -110,13 +117,13 @@ var signHandler = function(req, res, userInfo) {
 
 
 app.get('/useredit/:username', function(req, res) {
-  var username  = req.params.username
-    , user      = req.session.get('user') || {}
+  var username = req.params.username,
+    user = req.session.get('user') || {}
 
   redblade.client.hgetall('user:' + username, function(err, userInfo) {
     if (userInfo && (userInfo.username == user.username || user.isAdmin)) {
       return res.render('useredit.tmpl', {
-        userInfo : userInfo
+        userInfo: userInfo
       })
     }
 
@@ -127,16 +134,18 @@ app.get('/useredit/:username', function(req, res) {
 
 
 app.post('/user.signup.post', function(req, res) {
-  var postInfo = req.body
-    , userInfo = {
-        username: postInfo.username
-      , password: postInfo.password
-      , email:    postInfo.email
+  var postInfo = req.body,
+    userInfo = {
+      username: postInfo.username,
+      password: postInfo.password,
+      email: postInfo.email
     }
 
   signup(userInfo, function(err) {
     if (err) {
-      res.send({ error: err.toString() })
+      res.send({
+        error: err.toString()
+      })
       return
     }
 
@@ -148,17 +157,20 @@ app.get('/user.signin.post', function(req, res) {
   var userInfo = req.body
   signin(userInfo, function(signedUser) {
     signedUser
-      ? signHandler(req, res, signedUser)
-      : res.send({ error: '登录失败' })
+      ?
+      signHandler(req, res, signedUser) :
+      res.send({
+        error: '登录失败'
+      })
   })
 }, 'qs')
 
 /*
-* user.edit.post: response json
-*/
+ * user.edit.post: response json
+ */
 app.post('/user.edit.post', function(req, res) {
-  var userInfo  = req.body
-    , user      = req.session.get('user')
+  var userInfo = req.body,
+    user = req.session.get('user')
 
   //密码加密后再比较
   userInfo.password = utility.getEncryption(userInfo.password || '')
@@ -172,31 +184,44 @@ app.post('/user.edit.post', function(req, res) {
 
     redblade.update('user', userInfo, function(err, done) {
       if (req.url.indexOf('redirect') < 0) {
-        res.send({ done: done })
+        res.send({
+          done: done
+        })
       } else {
         done
-          ? res.redirect('/')
-          : res.send({ error: (err || '更新失败').toString() })
+          ?
+          res.redirect('/') :
+          res.send({
+            error: (err || '更新失败').toString()
+          })
       }
     })
   } else {
-    res.send({ error: '参数错误' })
+    res.send({
+      error: '参数错误'
+    })
   }
 
 }, 'qs')
 
 app.get('/user.signout.post', function(req, res) {
-  var username = req.session.get('username')
-    , opts     = { path: '/', domain: WEBSVR_CONFIG.sessionDomain, httponly: true }
+  var username = req.session.get('username'),
+    opts = {
+      path: '/',
+      domain: WEBSVR_CONFIG.sessionDomain,
+      httponly: true
+    }
 
   //清空user
   req.session.set('user', '')
   res.cookie('t0', null, opts)
   res.cookie('t1', null, opts)
   res.cookie('t2', null, opts)
-  req.url.indexOf('redirect') < 0
-    ? res.send({done: true})
-    : res.redirect('/')
+  req.url.indexOf('redirect') < 0 ?
+    res.send({
+      done: true
+    }) :
+    res.redirect('/')
 })
 
 
@@ -204,34 +229,40 @@ app.get('/user.signout.post', function(req, res) {
 userInfo: get userInfo and articles
 */
 app.get('/user/:username/:pageNumber', function(req, res) {
-  var url       = req.url
-    , params    = req.params
-    , username  = params.username || ''
+  var url = req.url,
+    params = req.params,
+    username = params.username || ''
 
   /*
   Get parameters: filter category
   url: '/user/ourjs/0'
   */
-  var tmpl        = url.split('/')[1] || 'user'
-    , pageNumber  = params.pageNumber || 0
-    , nextNumber  = pageNumber + 1
-    , pageSize    = 100
+  var tmpl = url.split('/')[1] || 'user',
+    pageNumber = params.pageNumber || 0,
+    nextNumber = pageNumber + 1,
+    pageSize = 100
 
   if (username) {
     redblade.client.hgetall('user:' + username, function(err, userInfo) {
       if (!userInfo) {
-        userInfo = { username: username }
-        // res.send('用户不存在')
-        // return
+        userInfo = {
+            username: username
+          }
+          // res.send('用户不存在')
+          // return
       }
 
-      redblade.select('article', { poster: username }, function(err, articles) {
+      redblade.select('article', {
+        poster: username
+      }, function(err, articles) {
         res.render(tmpl + ".tmpl", {
-            articles  : articles || []
-          , userInfo  : userInfo
-          , nextPage  : nextNumber
+          articles: articles || [],
+          userInfo: userInfo,
+          nextPage: nextNumber
         })
-      }, { desc: true })
+      }, {
+        desc: true
+      })
     })
   } else {
     res.end()
@@ -240,12 +271,10 @@ app.get('/user/:username/:pageNumber', function(req, res) {
 
 
 
-
-
 module.exports = {
-    getAutoSignin : getAutoSignin
-  , setAutoSignin : setAutoSignin
-  , getUser       : getUser
-  , signup        : signup
-  , signin        : signin
+  getAutoSignin: getAutoSignin,
+  setAutoSignin: setAutoSignin,
+  getUser: getUser,
+  signup: signup,
+  signin: signin
 }
